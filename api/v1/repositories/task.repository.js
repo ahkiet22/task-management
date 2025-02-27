@@ -12,3 +12,5 @@ const getTaskDetailById = async (id) => {
     deleted: false,
   });
 };
+
+module.exports = { getAllTask, getTaskDetailById };
