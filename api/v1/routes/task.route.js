@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const Task = require("../../../models/taks.model");
+const Task = require("../models/taks.model");
 
 
 // const controller = require("../../controllers/client/task.controller");
