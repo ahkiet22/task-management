@@ -45,7 +45,6 @@ const createTask = async (taskData) => {
 };
 
 const editTask = async (id, taskData) => {
-  console.log(taskData);
   return await Task.updateOne(
     {
       _id: id,
@@ -53,6 +52,19 @@ const editTask = async (id, taskData) => {
     taskData
   );
 };
+
+const deleteTask = async (id) => {
+  return await Task.updateOne(
+    {
+      _id: id,
+    },
+    {
+      deleted: true,
+      deletedAt: new Date(),
+    }
+  );
+};
+
 module.exports = {
   getAllTask,
   countTask,
@@ -61,4 +73,5 @@ module.exports = {
   changeMulti,
   createTask,
   editTask,
+  deleteTask,
 };

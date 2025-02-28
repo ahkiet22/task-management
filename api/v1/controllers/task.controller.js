@@ -114,4 +114,23 @@ const edit = async (req, res) => {
   }
 };
 
-module.exports = { index, detail, changeStatus, changeMulti, create, edit };
+// [DELETE] /api/v1/tasks/delete/:id
+const deleteTask = async (req, res) => {
+  try {
+    const id = req.params.id;
+    await taskService.deleteTask(id);
+    res.status(200).json({ status: 200, message: "Delete task success!" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+module.exports = {
+  index,
+  detail,
+  changeStatus,
+  changeMulti,
+  create,
+  edit,
+  deleteTask,
+};
