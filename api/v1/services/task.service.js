@@ -24,6 +24,10 @@ const createTask = async (taskData) => {
   return await taskRepository.createTask(taskData);
 };
 
+const editTask = async (id, taskData) => {
+  return await taskRepository.editTask(id, taskData);
+};
+
 module.exports = {
   getAllTask,
   countTask,
@@ -31,4 +35,5 @@ module.exports = {
   patchChangeStatus,
   changeMultiStatus,
   createTask,
+  editTask
 };

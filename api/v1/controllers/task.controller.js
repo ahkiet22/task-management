@@ -103,4 +103,15 @@ const create = async (req, res) => {
   }
 };
 
-module.exports = { index, detail, changeStatus, changeMulti, create };
+// [PATCH] /api/v1/tasks/change-status/:id
+const edit = async (req, res) => {
+  try {
+    const id = req.params.id;
+    await taskService.editTask(id, req.body);
+    res.status(200).json({ status: 200, message: "Edit task success!" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+module.exports = { index, detail, changeStatus, changeMulti, create, edit };

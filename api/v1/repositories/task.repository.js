@@ -43,6 +43,16 @@ const changeMulti = async (ids, value) => {
 const createTask = async (taskData) => {
   return await Task.create(taskData);
 };
+
+const editTask = async (id, taskData) => {
+  console.log(taskData);
+  return await Task.updateOne(
+    {
+      _id: id,
+    },
+    taskData
+  );
+};
 module.exports = {
   getAllTask,
   countTask,
@@ -50,4 +60,5 @@ module.exports = {
   patchChangeStatus,
   changeMulti,
   createTask,
+  editTask,
 };
