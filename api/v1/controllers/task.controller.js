@@ -49,9 +49,27 @@ const index = async (req, res) => {
 
 // [GET] /api/v1/tasks/detail/:id
 const detail = async (req, res) => {
-  const id = req.params.id;
-  const tasks = await taskService.getTaskDetailById(id);
-  res.json(tasks);
+  try {
+    const id = req.params.id;
+    const tasks = await taskService.getTaskDetailById(id);
+    res.json(tasks);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
 };
 
 module.exports = { index, detail };
+
+// [PATCH] /api/v1/tasks/change-status/:id
+const changeStatus = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const status = req.body.status;
+    await taskService.patchChangeStatus(id, status);
+    res.status(200).json({ status: 200, message: "Update status success!" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+module.exports = { index, detail, changeStatus };

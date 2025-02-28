@@ -12,4 +12,13 @@ const getTaskDetailById = async (id) => {
   return await taskRepository.getTaskDetailById(id);
 };
 
-module.exports = { getAllTask, countTask, getTaskDetailById };
+const patchChangeStatus = async (id, status) => {
+  return await taskRepository.patchChangeStatus(id, status);
+};
+
+module.exports = {
+  getAllTask,
+  countTask,
+  getTaskDetailById,
+  patchChangeStatus,
+};

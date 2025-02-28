@@ -10,6 +10,7 @@ const getAllTask = async (filter, sort, objectPagination) => {
 const countTask = async (filter) => {
   return await Task.countDocuments(filter);
 };
+
 const getTaskDetailById = async (id) => {
   return await Task.findOne({
     _id: id,
@@ -17,4 +18,20 @@ const getTaskDetailById = async (id) => {
   });
 };
 
-module.exports = { getAllTask, countTask, getTaskDetailById };
+const patchChangeStatus = async (id, status) => {
+  return await Task.updateOne(
+    {
+      _id: id,
+    },
+    {
+      status: status,
+    }
+  );
+};
+
+module.exports = {
+  getAllTask,
+  countTask,
+  getTaskDetailById,
+  patchChangeStatus,
+};
