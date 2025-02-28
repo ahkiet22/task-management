@@ -1,4 +1,5 @@
 const taskService = require("../services/task.service");
+const paginationHelper = require("../../../helpers/pagination");
 
 // [GET] /api/v1/tasks or /tasks?status=""
 const index = async (req, res) => {
@@ -10,6 +11,19 @@ const index = async (req, res) => {
       find.status = req.query.status;
     }
 
+    // Pagination
+    const countTasks = await taskService.countTask(find);
+
+    let objectPagination = paginationHelper(
+      {
+        currentPage: 1,
+        limitItem: 2,
+      },
+      req.query,
+      countTasks
+    );
+    // End Pagination
+
     // Sort
     const sort = {};
     if (req.query.sortKey && req.query.sortValue) {
@@ -17,7 +31,7 @@ const index = async (req, res) => {
     }
     // End Sort
 
-    const tasks = await taskService.getAllTask(find, sort);
+    const tasks = await taskService.getAllTask(find, sort, objectPagination);
     if (!tasks || tasks.length === 0) {
       return res.status(404).json({ message: "Task not found" });
     }
