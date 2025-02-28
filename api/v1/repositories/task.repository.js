@@ -65,6 +65,18 @@ const deleteTask = async (id) => {
   );
 };
 
+const deleteMulti = async (ids) => {
+  return await Task.updateMany(
+    {
+      _id: { $in: ids },
+    },
+    {
+      deleted: true,
+      deletedAt: new Date(),
+    }
+  );
+};
+
 module.exports = {
   getAllTask,
   countTask,
@@ -74,4 +86,5 @@ module.exports = {
   createTask,
   editTask,
   deleteTask,
+  deleteMulti,
 };

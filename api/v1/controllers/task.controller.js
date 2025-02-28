@@ -80,6 +80,10 @@ const changeMulti = async (req, res) => {
         await taskService.changeMultiStatus(ids, value);
         res.status(200).json({ status: 200, message: "Update multi success!" });
         break;
+      case "delete":
+        await taskService.deleteMulti(ids);
+        res.status(200).json({ status: 200, message: "Delete multi success!" });
+        break;
       default:
         res.status(404).json({ message: "Not found" });
         break;

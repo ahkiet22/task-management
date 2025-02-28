@@ -32,6 +32,10 @@ const deleteTask = async (id) => {
   return await taskRepository.deleteTask(id);
 };
 
+const deleteMulti = async (ids) => {
+  return await taskRepository.deleteMulti(ids);
+};
+
 module.exports = {
   getAllTask,
   countTask,
@@ -40,5 +44,6 @@ module.exports = {
   changeMultiStatus,
   createTask,
   editTask,
-  deleteTask
+  deleteTask,
+  deleteMulti
 };
