@@ -1,14 +1,20 @@
 const taskService = require("../services/task.service");
 const paginationHelper = require("../../../helpers/pagination");
+const searchHelper = require("../../../helpers/search");
 
 // [GET] /api/v1/tasks or /tasks?status=""
 const index = async (req, res) => {
   try {
+    let objectSearch = searchHelper(req.query);
     const find = {
       deleted: false,
     };
     if (req.query.status) {
       find.status = req.query.status;
+    }
+
+    if (req.query.keyword) {
+      find.title = objectSearch.regex;
     }
 
     // Pagination
