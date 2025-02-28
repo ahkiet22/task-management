@@ -72,4 +72,23 @@ const changeStatus = async (req, res) => {
   }
 };
 
-module.exports = { index, detail, changeStatus };
+// [PATCH] /api/v1/tasks/change-multi
+const changeMulti = async (req, res) => {
+  try {
+    const { ids, key, value } = req.body;
+
+    switch (key) {
+      case "status":
+        await taskService.changeMultiStatus(ids, value);
+        res.status(200).json({ status: 200, message: "Update multi success!" });
+        break;
+      default:
+        res.status(404).json({ message: "Not found" });
+        break;
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+module.exports = { index, detail, changeStatus, changeMulti };

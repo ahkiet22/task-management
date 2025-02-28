@@ -16,9 +16,14 @@ const patchChangeStatus = async (id, status) => {
   return await taskRepository.patchChangeStatus(id, status);
 };
 
+const changeMultiStatus = async (ids, value) => {
+  return await taskRepository.changeMulti(ids, value);
+};
+
 module.exports = {
   getAllTask,
   countTask,
   getTaskDetailById,
   patchChangeStatus,
+  changeMultiStatus,
 };

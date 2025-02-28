@@ -29,9 +29,20 @@ const patchChangeStatus = async (id, status) => {
   );
 };
 
+const changeMulti = async (ids, value) => {
+  return await Task.updateMany(
+    {
+      _id: { $in: ids },
+    },
+    {
+      status: value,
+    }
+  );
+};
 module.exports = {
   getAllTask,
   countTask,
   getTaskDetailById,
   patchChangeStatus,
+  changeMulti,
 };
