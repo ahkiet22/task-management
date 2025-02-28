@@ -39,10 +39,15 @@ const changeMulti = async (ids, value) => {
     }
   );
 };
+
+const createTask = async (taskData) => {
+  return await Task.create(taskData);
+};
 module.exports = {
   getAllTask,
   countTask,
   getTaskDetailById,
   patchChangeStatus,
   changeMulti,
+  createTask,
 };

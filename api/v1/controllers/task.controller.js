@@ -58,8 +58,6 @@ const detail = async (req, res) => {
   }
 };
 
-module.exports = { index, detail };
-
 // [PATCH] /api/v1/tasks/change-status/:id
 const changeStatus = async (req, res) => {
   try {
@@ -91,4 +89,18 @@ const changeMulti = async (req, res) => {
   }
 };
 
-module.exports = { index, detail, changeStatus, changeMulti };
+// [GET] /api/v1/tasks/create
+const create = async (req, res) => {
+  try {
+    const data = await taskService.createTask(req.body);
+    if (data) {
+      res
+        .status(201)
+        .json({ status: 201, message: "Create task success!", data: data });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+module.exports = { index, detail, changeStatus, changeMulti, create };

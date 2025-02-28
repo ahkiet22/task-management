@@ -20,10 +20,15 @@ const changeMultiStatus = async (ids, value) => {
   return await taskRepository.changeMulti(ids, value);
 };
 
+const createTask = async (taskData) => {
+  return await taskRepository.createTask(taskData);
+};
+
 module.exports = {
   getAllTask,
   countTask,
   getTaskDetailById,
   patchChangeStatus,
   changeMultiStatus,
+  createTask,
 };
