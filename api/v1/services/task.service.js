@@ -1,7 +1,7 @@
 const taskRepository = require("../repositories/task.repository");
 
-const getAllTask = async (filter) => {
-  return await taskRepository.getAllTask(filter);
+const getAllTask = async (filter, sort) => {
+  return await taskRepository.getAllTask(filter, sort);
 };
 
 const getTaskDetailById = async (id) => {
