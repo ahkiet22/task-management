@@ -1,9 +1,7 @@
 const Task = require("../models/taks.model");
 
-const getAllTask = async () => {
-  return await Task.find({
-    deleted: false,
-  });
+const getAllTask = async (filter) => {
+  return await Task.find(filter);
 };
 
 const getTaskDetailById = async (id) => {
