@@ -1,0 +1,57 @@
+const authRepository = require("../repositories/auth.repository");
+const bcrypt = require("bcrypt");
+const {
+  generateAccessToken,
+  generateRefreshToken,
+} = require("../../../helpers/jwtGenerate");
+
+const register = async (fullName, email, password) => {
+  const existEmail = await authRepository.getUserEmail(email);
+  if (existEmail) {
+    throw new Error("Email already in use");
+  }
+  const hashPassword = await bcrypt.hash(password, 10);
+  const newUser = await authRepository.createUser({
+    fullName,
+    email,
+    password: hashPassword,
+  });
+  const userData = {
+    _id: newUser._id,
+    fullName: newUser.fullName,
+    email: newUser.email,
+  };
+  const accessToken = generateAccessToken(userData);
+  const refreshToken = generateRefreshToken(userData);
+
+  return { accessToken, refreshToken };
+};
+
+const login = async (email, password) => {
+  const user = await authRepository.getUserEmail(email);
+  if (!user) {
+    return {
+      status: 400,
+      message: "User not found",
+    };
+  }
+  const userData = {
+    _id: user._id,
+    fullName: user.fullName,
+    email: user.email,
+  };
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid) {
+    return {
+      status: 400,
+      message: "Invalid password",
+    };
+  }
+
+  const accessToken = generateAccessToken(userData);
+  const refreshToken = generateRefreshToken(userData);
+
+  return { accessToken, refreshToken };
+};
+
+module.exports = { register, login };
