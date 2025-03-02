@@ -54,8 +54,17 @@ const forgotPassword = async (req, res) => {
   }
 };
 
+// [POST] /api/v1/auth/forgot-password/otp
+const otpPassword = async (req, res) => {
+  const email = req.body.email;
+  const otp = req.body.otp;
+  const data = await authService.otpPassword(email, otp);
+  res.status(data.status).json({ status: data.status, message: data.message });
+};
+
 module.exports = {
   register,
   login,
   forgotPassword,
+  otpPassword,
 };

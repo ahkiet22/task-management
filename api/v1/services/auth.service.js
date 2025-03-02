@@ -65,11 +65,10 @@ const forgotPassword = async (email) => {
     };
   }
   const otp = generateHelper.generateRandomNumber(6);
-  const timeExpire = 5;
   const objectForgotPassword = {
     email: email,
     otp: otp,
-    expiresAt: Date.now() + timeExpire * 60,
+    expiresAt: Date.now(),
   };
 
   await authRepository.forgotPassword(objectForgotPassword);
@@ -78,4 +77,18 @@ const forgotPassword = async (email) => {
   return { status: 200 };
 };
 
-module.exports = { register, login, forgotPassword };
+const otpPassword = async (email, otp) => {
+  const result = await authRepository.otpPassword(email, otp);
+  if (!result) {
+    return {
+      status: 400,
+      message: "OTP is not valid!",
+    };
+  }
+
+  const user = await authRepository.getUserEmail(email);
+
+  return { status: 200, message: "Sent otp code via email!" };
+};
+
+module.exports = { register, login, forgotPassword, otpPassword };

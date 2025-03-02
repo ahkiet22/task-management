@@ -19,8 +19,16 @@ const forgotPassword = async (objectForgotPassword) => {
   return newData;
 };
 
+const otpPassword = async (email, otp) => {
+  return await ForgotPassword.findOne({
+    email: email,
+    otp: otp,
+  });
+};
+
 module.exports = {
   getUserEmail,
   createUser,
   forgotPassword,
+  otpPassword,
 };
