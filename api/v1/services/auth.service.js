@@ -85,10 +85,36 @@ const otpPassword = async (email, otp) => {
       message: "OTP is not valid!",
     };
   }
-
-  const user = await authRepository.getUserEmail(email);
-
   return { status: 200, message: "Sent otp code via email!" };
 };
 
-module.exports = { register, login, forgotPassword, otpPassword };
+const resetPassword = async (email, otp, newPassword) => {
+  const result = await authRepository.otpPassword(email, otp);
+  if (!result) {
+    return {
+      status: 400,
+      message: "OTP is not valid or has expired",
+    };
+  }
+
+  const user = await authRepository.getUserEmail(email);
+  if (!user) {
+    return {
+      status: 400,
+      message: "User not found",
+    };
+  }
+
+  const hashPassword = await bcrypt.hash(newPassword, 10);
+  await authRepository.resetPassword(email, hashPassword);
+
+  return { status: 200, message: "Password reset successfully" };
+};
+
+module.exports = {
+  register,
+  login,
+  forgotPassword,
+  otpPassword,
+  resetPassword,
+};

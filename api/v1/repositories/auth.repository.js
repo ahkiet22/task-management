@@ -26,9 +26,14 @@ const otpPassword = async (email, otp) => {
   });
 };
 
+const resetPassword = async (email, newPassword) => {
+  return await User.updateOne({ email: email }, { password: newPassword });
+};
+
 module.exports = {
   getUserEmail,
   createUser,
   forgotPassword,
   otpPassword,
+  resetPassword,
 };

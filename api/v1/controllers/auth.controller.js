@@ -62,9 +62,23 @@ const otpPassword = async (req, res) => {
   res.status(data.status).json({ status: data.status, message: data.message });
 };
 
+// [POST] /api/v1/auth/forgot-password/reset-password
+const resetPassword = async (req, res) => {
+  const { email, otp, password } = req.body;
+  try {
+    const data = await authService.resetPassword(email, otp, password);
+    res
+      .status(data.status)
+      .json({ status: data.status, message: data.message });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   register,
   login,
   forgotPassword,
   otpPassword,
+  resetPassword,
 };
