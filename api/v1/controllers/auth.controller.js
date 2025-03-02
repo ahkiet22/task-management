@@ -1,5 +1,6 @@
 const authService = require("../services/auth.service");
 
+// [POST] /api/v1/auth/register
 const register = async (req, res) => {
   try {
     const { fullName, email, password } = req.body;
@@ -22,6 +23,7 @@ const register = async (req, res) => {
   }
 };
 
+// [POST] /api/v1/auth/login
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -43,7 +45,17 @@ const login = async (req, res) => {
   }
 };
 
+// [POST] /api/v1/auth/forgot-password
+const forgotPassword = async (req, res) => {
+  const email = req.body.email;
+  const data = await authService.forgotPassword(email);
+  if (data.status == 200) {
+    res.status(200).json({ status: 200, message: "Sent otp code via email!" });
+  }
+};
+
 module.exports = {
   register,
   login,
+  forgotPassword,
 };
