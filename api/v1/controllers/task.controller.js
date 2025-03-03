@@ -96,6 +96,7 @@ const changeMulti = async (req, res) => {
 // [GET] /api/v1/tasks/create
 const create = async (req, res) => {
   try {
+    req.body.createBy = req.user.id;
     const data = await taskService.createTask(req.body);
     if (data) {
       res
