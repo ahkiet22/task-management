@@ -35,6 +35,5 @@ module.exports.authMiddleware = async (req, res, next) => {
     }
     req.user = decoded;
   });
-  // console.log(req.cookies?.token);
   next();
 };
