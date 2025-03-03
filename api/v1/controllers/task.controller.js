@@ -7,6 +7,7 @@ const index = async (req, res) => {
   try {
     let objectSearch = searchHelper(req.query);
     const find = {
+      $or: [{ createdBy: req.user.id }, { listUser: req.user.id }],
       deleted: false,
     };
     if (req.query.status) {
@@ -96,7 +97,7 @@ const changeMulti = async (req, res) => {
 // [GET] /api/v1/tasks/create
 const create = async (req, res) => {
   try {
-    req.body.createBy = req.user.id;
+    req.body.createdBy = req.user.id;
     const data = await taskService.createTask(req.body);
     if (data) {
       res
